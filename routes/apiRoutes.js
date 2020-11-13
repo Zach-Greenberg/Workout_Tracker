@@ -38,7 +38,7 @@ router.put("/api/workouts/:id", (req, res) => {
   
 router.post("/api/workouts", async (req, res) => {
     const response = await Workout.create({type: "workout"});
-    res.json(response);
+    res.json(response).catch(err => res.json(err))
 });
   
 router.get("/", (req,res) => {
