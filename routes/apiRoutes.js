@@ -3,11 +3,17 @@ const Workout = require("../models/workoutModel");
 const path = require("path");
 
 router.get("/api/workouts", (req, res) => {
-    Workout.find
+    Workout.find({})
+    .then(workouts => {
+        res.json(workouts);
+    })
+    .catch(err => {
+        res.status(400).json(err);
+    });
   });
   
   router.get("/api/workouts/range", (req, res) => {
-
+    
   });
   
   router.put("/api/workouts/:id", (req, res) => {
