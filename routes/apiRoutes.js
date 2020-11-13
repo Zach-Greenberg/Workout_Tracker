@@ -3,7 +3,7 @@ const Workout = require("../models/workoutModel");
 const path = require("path");
 
 router.get("/api/workouts", (req, res) => {
-
+    Workout.find
   });
   
   router.get("/api/workouts/range", (req, res) => {
