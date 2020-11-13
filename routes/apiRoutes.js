@@ -36,7 +36,13 @@ router.put("/api/workouts/:id", (req, res) => {
 });
   
 router.post("/api/workouts", ({body}, res) => {
-
+    Workout.create(body)
+    .then(workouts => {
+        res.json(workouts);
+    })
+    .catch(err => {
+        res.json(err);
+    });
 });
   
 router.get("/", (req,res) => {
