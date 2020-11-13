@@ -23,10 +23,8 @@ router.get("/api/workouts/range", (req, res) => {
 });
   
 router.put("/api/workouts/:id", (req, res) => {
-    const workout = new Workout();
-    workout.calcDuration(req.params.id, req.body);
-
-    Workout.findByIdAndUpdate(req.params.id, { $push: {exercises: req.body } }, { new: true, runValidators: true})
+    const id = req.params.id
+    Workout.findByIdAndUpdate({_id: id}, { $push: {exercises: req.body } }, {new: true})
     .then(workouts => {
         res.json(workouts);
     })
@@ -35,14 +33,9 @@ router.put("/api/workouts/:id", (req, res) => {
     })
 });
   
-router.post("/api/workouts", ({body}, res) => {
-    Workout.create(body)
-    .then(workouts => {
-        res.json(workouts);
-    })
-    .catch(err => {
-        res.json(err);
-    });
+router.post("/api/workouts", async (req, res) => {
+    const response = await Workout.create({type: "workout"});
+    res.json(response);
 });
   
 router.get("/", (req,res) => {
@@ -53,7 +46,7 @@ router.get("/exercise", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/exercise.html"));
 });
   
- router.get("/stats", (req, res) => {
+router.get("/stats", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/stats.html"));
 })
   
