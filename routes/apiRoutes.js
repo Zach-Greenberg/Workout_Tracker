@@ -23,6 +23,9 @@ router.get("/api/workouts/range", (req, res) => {
 });
   
 router.put("/api/workouts/:id", (req, res) => {
+    const workout = new Workout();
+    workout.calcDuration(req.params.id, req.body);
+    
     const id = req.params.id
     Workout.findByIdAndUpdate({_id: id}, { $push: {exercises: req.body } }, {new: true})
     .then(workouts => {

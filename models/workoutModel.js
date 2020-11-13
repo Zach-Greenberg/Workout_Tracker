@@ -40,6 +40,18 @@ const WorkoutSchema = new Schema({
     }
 });
 
+WorkoutSchema.methods.calcDuration = function(id, exercise) {
+    mongoose.model('Workout').findById(id, function(err, workout) {
+        let totDuration = workout.totalDuration + exercise.duration;
+        mongoose.model("Workout").findByIdAndUpdate(id, { $set: { totalDuration: totDuration } }, {runValidators: true})
+                .then(workouts => {
+                    console.log("success");
+                }).catch(err => {
+                    console.log(err);
+                });
+    });
+}
+
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
 module.exports = Workout;
